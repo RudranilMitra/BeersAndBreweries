@@ -11,7 +11,13 @@ output:
 
 ## Introduction
 
-The introduction should not reference a project, persay. No part of this should be informal.
+*With a strong presence across the 50 states and the District of Columbia, craft breweries are a vibrant and flourishing economic force at the local, state and national level. As consumers continue to demand a wide range of high quality, full-flavored beers, small and independent craft brewers are meeting this growing demand with innovative offerings, creating high levels of economic value in the process.*
+
+**Bart Watson**, Chief Economist for the Brewers Association
+
+https://www.brewersassociation.org/statistics/economic-impact-data/
+
+This project will focus on gaining insite into breweries in the United Stated. We will focus on providing information to a national brewey for them to look into investing in the craft brewery indrestry.
 
 ## Questions
 
