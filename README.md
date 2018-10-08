@@ -3,11 +3,11 @@
 ### due date: October 18, 2018
 
 
-### Introduction
+## Introduction
 
 The introduction should not reference a project, persay. No part of this should be informal.
 
-### Questions
+## Questions
 
    1. How many breweries are present in each state?
    
@@ -22,7 +22,7 @@ The introduction should not reference a project, persay. No part of this should 
    6. Summary statistics for the ABV variable.
    
    7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
-   
-### Conclusion
+
+## Conclusion
 
 Summarize your findings from this exercise.
