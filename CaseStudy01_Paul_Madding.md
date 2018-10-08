@@ -17,7 +17,32 @@ output:
 
 https://www.brewersassociation.org/statistics/economic-impact-data/
 
-This project will focus on gaining insite into breweries in the United Stated. We will focus on providing information to a national brewey for them to look into investing in the craft brewery indrestry.
+This project will focus on gaining incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
+
+## Data
+
+The data for this study will consist of two databases collected and supplied by our employer.
+
+**Data/Beers.csv**
+
+Variable | Description
+------------- | -------------
+Name | name of beer
+BeerID | unique id number of the beer
+ABV | alcohol by volume of beer
+IBU | international bitterness units of the beer
+Style | style of beer
+Ounces | unit of measurement for the beer by oz
+
+**Data/Breweries.csv**
+
+Variable | Description
+------------- | -------------
+Name | name of beer
+Brew_ID | unique identification number of the brewery
+Name | name of brewery
+City | city where brewery is located
+State | state where brewery is located
 
 ## Questions
 
