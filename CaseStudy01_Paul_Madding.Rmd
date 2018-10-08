@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The introduction should not reference a project, persay. No part of this should be informal.
+This project will focus on gaining insite into breweries in the United Stated. We will focus on providing information to a national brewey for them to look into investing in the craft brewery indrestry.
 
 ## Questions
 
