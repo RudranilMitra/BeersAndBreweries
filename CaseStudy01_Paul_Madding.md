@@ -21,7 +21,7 @@ This project will focus on gaining incite into breweries in the United Stated. W
 
 ## Data
 
-The data for this study will consist of two databases collected and supplied by our employer.
+The data for this study will consist of two databases collected and supplied by our client.
 
 **Data/Beers.csv**
 
@@ -44,7 +44,66 @@ The data for this study will consist of two databases collected and supplied by 
 | City | city where brewery is located |
 | State | state where brewery is located |
 
-## Questions
+## Folder Information
+
+This will be information about folders
+
+## Questions our client would like addresses
+
+Load libraries
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```
+## -------------------------------------------------------------------------
+```
+
+```
+## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)
+```
+
+```
+## -------------------------------------------------------------------------
+```
+
+```
+## 
+## Attaching package: 'plyr'
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize
+```
+
+
+Read the two databases into R
+
+```r
+#read in the two databases
+breweries <- read.csv("Data/Breweries.csv")
+beers <- read.csv("Data/Beers.csv")
+```
+
 
    1. How many breweries are present in each state?
    
@@ -63,3 +122,9 @@ The data for this study will consist of two databases collected and supplied by 
 ## Conclusion
 
 Summarize your findings from this exercise.
+
+**sessionInfo**
+
+R version 3.5.1 (2018-07-02)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)

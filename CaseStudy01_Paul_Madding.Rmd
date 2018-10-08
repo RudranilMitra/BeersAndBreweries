@@ -23,7 +23,7 @@ This project will focus on gaining incite into breweries in the United Stated. W
 
 ## Data
 
-The data for this study will consist of two databases collected and supplied by our employer.
+The data for this study will consist of two databases collected and supplied by our client.
 
 **Data/Beers.csv**
 
@@ -50,10 +50,10 @@ The data for this study will consist of two databases collected and supplied by 
 
 This will be information about folders
 
-## Questions
+## Questions our client would like addresses
 
 Load libraries
-```{r library, echo=TRUE}
+```{r library, echo=FALSE}
 #load libraries
 library(dplyr)
 library(plyr)
@@ -61,7 +61,7 @@ library(ggplot2)
 ```
 
 
-Read data into R
+Read the two databases into R
 ```{r read data, echo=TRUE}
 #read in the two databases
 breweries <- read.csv("Data/Breweries.csv")
@@ -87,7 +87,8 @@ beers <- read.csv("Data/Beers.csv")
 
 Summarize your findings from this exercise.
 
-## sessionInfo
+**sessionInfo**
+
 R version 3.5.1 (2018-07-02)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows >= 8 x64 (build 9200)

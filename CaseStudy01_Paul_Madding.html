@@ -323,7 +323,7 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>The data for this study will consist of two databases collected and supplied by our employer.</p>
+<p>The data for this study will consist of two databases collected and supplied by our client.</p>
 <p><strong>Data/Beers.csv</strong></p>
 <table>
 <thead>
@@ -391,8 +391,36 @@ $(document).ready(function () {
 </tbody>
 </table>
 </div>
-<div id="questions" class="section level2">
-<h2>Questions</h2>
+<div id="folder-information" class="section level2">
+<h2>Folder Information</h2>
+<p>This will be information about folders</p>
+</div>
+<div id="questions-our-client-would-like-addresses" class="section level2">
+<h2>Questions our client would like addresses</h2>
+<p>Load libraries</p>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<p>Read the two databases into R</p>
+<pre class="r"><code>#read in the two databases
+breweries &lt;- read.csv(&quot;Data/Breweries.csv&quot;)
+beers &lt;- read.csv(&quot;Data/Beers.csv&quot;)</code></pre>
 <ol style="list-style-type: decimal">
 <li><p>How many breweries are present in each state?</p></li>
 <li><p>Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.</p></li>
@@ -406,6 +434,8 @@ $(document).ready(function () {
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
 <p>Summarize your findings from this exercise.</p>
+<p><strong>sessionInfo</strong></p>
+<p>R version 3.5.1 (2018-07-02) Platform: x86_64-w64-mingw32/x64 (64-bit) Running under: Windows &gt;= 8 x64 (build 9200)</p>
 </div>
 
 
