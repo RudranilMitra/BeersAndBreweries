@@ -46,7 +46,28 @@ The data for this study will consist of two databases collected and supplied by 
 | City | city where brewery is located |
 | State | state where brewery is located |
 
+## Folder Information
+
+This will be information about folders
+
 ## Questions
+
+Load libraries
+```{r library, echo=TRUE}
+#load libraries
+library(dplyr)
+library(plyr)
+library(ggplot2)
+```
+
+
+Read data into R
+```{r read data, echo=TRUE}
+#read in the two databases
+breweries <- read.csv("Data/Breweries.csv")
+beers <- read.csv("Data/Beers.csv")
+```
+
 
    1. How many breweries are present in each state?
    
@@ -65,3 +86,8 @@ The data for this study will consist of two databases collected and supplied by 
 ## Conclusion
 
 Summarize your findings from this exercise.
+
+## sessionInfo
+R version 3.5.1 (2018-07-02)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)

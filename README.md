@@ -28,12 +28,6 @@ The data for this study will consist of two databases collected and supplied by 
 | Style | style of beer |
 | Ounces | unit of measurement for the beer by oz |
 
-Name | Lunch order | Spicy      | Owes
-------- | ---------------- | ---------- | ---------:
-Joan  | saag paneer | medium | $11
-Sally  | vindaloo        | mild       | $14
-Erin   | lamb madras | HOT      | $5
-
 **Data/Breweries.csv**
 
 | Variable | Description |
@@ -44,7 +38,11 @@ Erin   | lamb madras | HOT      | $5
 | City | city where brewery is located |
 | State | state where brewery is located |
 
-## Questions
+## Folder Information
+
+This will be information about folders
+
+## Questions client would like addressed
 
    1. How many breweries are present in each state?
    
@@ -63,3 +61,8 @@ Erin   | lamb madras | HOT      | $5
 ## Conclusion
 
 Summarize your findings from this exercise.
+
+## sessionInfo
+R version 3.5.1 (2018-07-02)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)
