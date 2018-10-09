@@ -243,7 +243,46 @@ colSums(is.na(brew_beer))
 ```
 
    4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
-   
+
+```r
+#Compute the median alcohol content (ABV) by state
+medABV <- tapply(brew_beer$ABV, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
+#Compute the median international bitterness unit (IBU) by state
+medIBU <- tapply(brew_beer$IBU, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
+#sort ABV in desending order
+
+#plot a bar chart to compare ABV and IBU
+#convert AVB and IBU to a data frame
+medABVbar <- data.frame(medABV)
+medIBUbar <- data.frame(medIBU)
+
+#add a State column to ABV and IBU
+medABVbar$State <- rownames(medABVbar)
+medIBUbar$State <- rownames(medIBUbar)
+
+#plot a bar chart for ABV
+ggplot(medABVbar, aes(x=State, y=medABV)) +
+  geom_bar(stat="identity", color="gray", fill="blue") +
+  xlab("Alcohol Content by State") + ylab("State") +
+  ggtitle("Median ABV by State") +
+  coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
+```
+
+![](CaseStudy01_Paul_Madding_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+```r
+#Remove SD from the list due to no IBU data
+medIBUbar <- medIBUbar[-grep("SD", medIBUbar$State),]
+#plot a bar chart for IBU
+ggplot(medIBUbar, aes(x=State, y=medIBU)) +
+  geom_bar(stat="identity", color="gray", fill="blue") +
+  xlab("IBU by State") + ylab("State") +
+  ggtitle("Median IBU by State") +
+  coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
+```
+
+![](CaseStudy01_Paul_Madding_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
+
    5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
    
    6. Summary statistics for the ABV variable.
