@@ -1,6 +1,6 @@
 ---
 title: "A Study of Beers and Breweries in the US"
-author: "Ryan Quincy Paul & Chad Madding"
+author: "Ryan Paul & Chad Madding"
 date: "October 18, 2018"
 output:
   html_document:

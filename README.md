@@ -1,5 +1,5 @@
 #### A Study of Beers and Breweries in the US
-#### authors: Ryan Quincy Paul & Chad Madding
+#### authors: Ryan Paul & Chad Madding
 #### due date: October 18, 2018
 
 
