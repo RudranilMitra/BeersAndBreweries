@@ -70,11 +70,39 @@ beers <- read.csv("Data/Beers.csv")
 
 
    1. How many breweries are present in each state?
-   
+```{r breweries state}
+#count breweries in each state
+brew_state <- table(breweries$State)
+brew_state
+```
+
    2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
-   
+```{r merge data}
+#looking at each database to see problems before the merge
+head(beers)
+head(breweries)
+#rename Brew_ID to Brewery_id to merge data
+colnames(breweries)[1] <- "Brewery_id"
+#both have a "Name" two for different groups
+#rename Name to Brewery_Name
+colnames(breweries)[2] <- "Brewery_Name"
+#rename Name to Beer_Name
+colnames(beers)[1] <- "Beer_Name"
+#merge both data sets
+brew_beer <- merge.data.frame(beers, breweries, by = "Brewery_id")
+#print the first 6 observations
+head(brew_beer, 6)
+#print the last 6 observations
+tail(brew_beer, 6)
+```
+
    3. Report the number of NA's in each column.
-   
+```{r count NAs}
+#use colSum to sum up the NA's in each column
+colSums(is.na(brew_beer))
+
+```
+
    4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
    
    5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
