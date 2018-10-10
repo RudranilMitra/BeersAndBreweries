@@ -17,7 +17,7 @@ output:
 
 https://www.brewersassociation.org/statistics/economic-impact-data/
 
-This project will focus on gaining incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
+We have been hired to gain incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
 
 ## Data
 
@@ -270,7 +270,7 @@ ggplot(medABVbar, aes(x=State, y=medABV)) +
   coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
 ```
 
-![](CaseStudy01_Paul_Madding_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+![](CaseStudy01_Paul_Madding_files/figure-html/Compute the median-1.png)<!-- -->
 
 ```r
 #Remove SD from the list due to no IBU data
@@ -283,12 +283,39 @@ ggplot(medIBUbar, aes(x=State, y=medIBU)) +
   coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
 ```
 
-![](CaseStudy01_Paul_Madding_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
+![](CaseStudy01_Paul_Madding_files/figure-html/Compute the median-2.png)<!-- -->
 
    5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
-   
+
+```r
+brew_beer$State[which.max(brew_beer$ABV)]
+```
+
+```
+## [1]  CO
+## 51 Levels:  AK  AL  AR  AZ  CA  CO  CT  DC  DE  FL  GA  HI  IA  ID ...  WY
+```
+
+```r
+brew_beer$State[which.max(brew_beer$IBU)]
+```
+
+```
+## [1]  OR
+## 51 Levels:  AK  AL  AR  AZ  CA  CO  CT  DC  DE  FL  GA  HI  IA  ID ...  WY
+```
+
    6. Summary statistics for the ABV variable.
-   
+
+```r
+summary(brew_beer$ABV)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+## 0.00100 0.05000 0.05600 0.05977 0.06700 0.12800      62
+```
+
    7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
 
 ```r
@@ -297,7 +324,6 @@ ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(me
 
 ![](CaseStudy01_Paul_Madding_files/figure-html/scatter plot-1.png)<!-- -->
 
-   
 ## Conclusion
 
 Summarize your findings from this exercise.

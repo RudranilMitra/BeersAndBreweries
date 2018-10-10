@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 https://www.brewersassociation.org/statistics/economic-impact-data/
 
-This project will focus on gaining incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
+We have been hired to gain incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
 
 ## Data
 
@@ -70,14 +70,14 @@ beers <- read.csv("Data/Beers.csv")
 
 
    1. How many breweries are present in each state?
-```{r breweries state}
+```{r breweries state, echo=TRUE}
 #count breweries in each state
 brew_state <- table(breweries$State)
 brew_state
 ```
 
    2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
-```{r merge data}
+```{r merge data, echo=TRUE}
 #looking at each database to see problems before the merge
 head(beers)
 head(breweries)
@@ -97,14 +97,14 @@ tail(brew_beer, 6)
 ```
 
    3. Report the number of NA's in each column.
-```{r count NAs}
+```{r count NAs, echo=TRUE}
 #use colSum to sum up the NA's in each column
 colSums(is.na(brew_beer))
 
 ```
 
    4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
-```{r}
+```{r Compute the median, echo=TRUE}
 #Compute the median alcohol content (ABV) by state
 medABV <- tapply(brew_beer$ABV, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
 #Compute the median international bitterness unit (IBU) by state
@@ -141,16 +141,23 @@ ggplot(medIBUbar, aes(x=State, y=medIBU)) +
 ```
 
    5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
-   
+```{r max ABV and IBU, echo= TRUE}
+brew_beer$State[which.max(brew_beer$ABV)]
+brew_beer$State[which.max(brew_beer$IBU)]
+```
+
    6. Summary statistics for the ABV variable.
-   
+```{r summary ABV, echo= TRUE}
+summary(brew_beer$ABV)
+
+```
+
    7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
 ```{r scatter plot, echo=TRUE}
 
 ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(method=lm,se=FALSE, na.rm=TRUE)
 ```
 
-   
 ## Conclusion
 
 Summarize your findings from this exercise.
