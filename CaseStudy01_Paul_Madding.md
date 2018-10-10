@@ -249,7 +249,6 @@ colSums(is.na(brew_beer))
 medABV <- tapply(brew_beer$ABV, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
 #Compute the median international bitterness unit (IBU) by state
 medIBU <- tapply(brew_beer$IBU, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
-#sort ABV in desending order
 
 #plot a bar chart to compare ABV and IBU
 #convert AVB and IBU to a data frame
@@ -260,10 +259,13 @@ medIBUbar <- data.frame(medIBU)
 medABVbar$State <- rownames(medABVbar)
 medIBUbar$State <- rownames(medIBUbar)
 
+#sort ABV in desending order
+medABVbar<- medABVbar[order(medABV), ]
+
 #plot a bar chart for ABV
 ggplot(medABVbar, aes(x=State, y=medABV)) +
-  geom_bar(stat="identity", color="gray", fill="blue") +
-  xlab("Alcohol Content by State") + ylab("State") +
+  geom_bar(stat="identity", color="white", fill="blue") +
+  ylab("Alcohol Content") + xlab("State") +
   ggtitle("Median ABV by State") +
   coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
 ```
@@ -275,8 +277,8 @@ ggplot(medABVbar, aes(x=State, y=medABV)) +
 medIBUbar <- medIBUbar[-grep("SD", medIBUbar$State),]
 #plot a bar chart for IBU
 ggplot(medIBUbar, aes(x=State, y=medIBU)) +
-  geom_bar(stat="identity", color="gray", fill="blue") +
-  xlab("IBU by State") + ylab("State") +
+  geom_bar(stat="identity", color="white", fill="blue") +
+  ylab("IBU") + xlab("State") +
   ggtitle("Median IBU by State") +
   coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
 ```
@@ -288,6 +290,13 @@ ggplot(medIBUbar, aes(x=State, y=medIBU)) +
    6. Summary statistics for the ABV variable.
    
    7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+
+```r
+ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(method=lm,se=FALSE, na.rm=TRUE)
+```
+
+![](CaseStudy01_Paul_Madding_files/figure-html/scatter plot-1.png)<!-- -->
+
    
 ## Conclusion
 
