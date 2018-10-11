@@ -415,8 +415,8 @@ beers &lt;- read.csv(&quot;Data/Beers.csv&quot;)</code></pre>
 <ol style="list-style-type: decimal">
 <li>How many breweries are present in each state?</li>
 </ol>
-<p><strong>The table below list out the breweries in each state. There are three states with just one brewerey and Colorado leads the list with 47.</strong></p>
-<pre class="r"><code>#count breweries in each state
+<p><strong>The table below list breweries in each state. Washington DC, North Dakota, South Dakota and West Virginia are at the bottom with only one brewery. Colorado leads the list with 47.</strong></p>
+<pre class="r"><code>#count breweries in each state and order from lowest to higest
 brew_state &lt;- sort(table(breweries$State))
 #List out the table 
 brew_state</code></pre>
@@ -512,7 +512,7 @@ tail(brew_beer, 6)</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Report the number of NA’s in each column.</li>
 </ol>
-<p><strong>There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA’s out of the total 2410 observations.</strong></p>
+<p><strong>There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA’s out of the total 2410 observations. The IBU data may need to be revisited. With close to half the data not reported predictive information based on this information may be skewed. We will address this if this shows to be a problem.</strong></p>
 <pre class="r"><code>#use colSum to sum up the NA&#39;s in each column
 colSums(is.na(brew_beer))</code></pre>
 <pre><code>##   Brewery_id    Beer_Name      Beer_ID          ABV          IBU 

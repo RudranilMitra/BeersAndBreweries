@@ -4,7 +4,9 @@ author: "Ryan Paul & Chad Madding"
 date: "October 18, 2018"
 output:
   html_document:
-    keep_md: true
+    keep_md: yes
+  pdf_document: default
+  word_document: default
 ---
 
 
@@ -74,11 +76,11 @@ beers <- read.csv("Data/Beers.csv")
 
    1. How many breweries are present in each state?
    
-**The table below list out the breweries in each state. There are three states with just one brewerey and Colorado leads the list with 47.**
+**The table below list breweries in each state. Washington DC, North Dakota, South Dakota and West Virginia are at the bottom with only one brewery. Colorado leads the list with 47.**
 
 
 ```r
-#count breweries in each state
+#count breweries in each state and order from lowest to higest
 brew_state <- sort(table(breweries$State))
 #List out the table 
 brew_state
@@ -202,7 +204,7 @@ tail(brew_beer, 6)
 
    3. Report the number of NA's in each column.
    
-**There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA's out of the total 2410 observations.**
+**There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA's out of the total 2410 observations. The IBU data may need to be revisited. With close to half the data not reported predictive information based on this information may be skewed. We will address this if this shows to be a problem.**
    
 
 ```r
