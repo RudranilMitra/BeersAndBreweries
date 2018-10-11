@@ -261,9 +261,11 @@ medIBUbar$State <- rownames(medIBUbar)
 
 #sort ABV in desending order
 medABVbar<- medABVbar[order(medABV), ]
+#sort IBU in desending order
+medIBUbar<- medIBUbar[order(medIBU), ]
 
 #plot a bar chart for ABV
-ggplot(medABVbar, aes(x=State, y=medABV)) +
+ggplot(na.omit(medABVbar), aes(x=reorder(medABVbar$State, medABVbar$medABV), y=medABVbar$medABV)) +
   geom_bar(stat="identity", color="white", fill="blue") +
   ylab("Alcohol Content") + xlab("State") +
   ggtitle("Median ABV by State") +
@@ -276,7 +278,7 @@ ggplot(medABVbar, aes(x=State, y=medABV)) +
 #Remove SD from the list due to no IBU data
 medIBUbar <- medIBUbar[-grep("SD", medIBUbar$State),]
 #plot a bar chart for IBU
-ggplot(medIBUbar, aes(x=State, y=medIBU)) +
+ggplot((medIBUbar), aes(x=reorder(medIBUbar$State, medIBUbar$medIBU), y=medIBUbar$medIBU)) +
   geom_bar(stat="identity", color="white", fill="blue") +
   ylab("IBU") + xlab("State") +
   ggtitle("Median IBU by State") +
@@ -319,10 +321,34 @@ summary(brew_beer$ABV)
    7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
 
 ```r
+#ggplot to check for correlation
 ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(method=lm,se=FALSE, na.rm=TRUE)
 ```
 
 ![](CaseStudy01_Paul_Madding_files/figure-html/scatter plot-1.png)<!-- -->
+
+The scatterplot looks to show a signaficly positive corrlation.
+
+Looking at the numbers below we can see a very signatific correlation between tha alochol content (ABV) and the bitterness (IBU) of a beer. This is observational data so even with the corrlation we can not infer anything to the larger population in reguards to ABV and IBU.
+
+```r
+# Pearson to check for correlation 
+cor.test(brew_beer$ABV, brew_beer$IBU, method = "pearson")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  brew_beer$ABV and brew_beer$IBU
+## t = 33.863, df = 1403, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.6407982 0.6984238
+## sample estimates:
+##       cor 
+## 0.6706215
+```
 
 ## Conclusion
 
