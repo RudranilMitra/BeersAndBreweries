@@ -10,12 +10,12 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-### Introduction
+## Introduction
 
-*With a strong presence across the 50 states and the District of Columbia, craft breweries are a vibrant and flourishing economic force at the local, state and national level. As consumers continue to demand a wide range of high quality, full-flavored beers, small and independent craft brewers are meeting this growing demand with innovative offerings, creating high levels of economic value in the process.*
+With a strong presence across the 50 states and the District of Columbia, craft breweries are a vibrant and flourishing economic force at the local, state and national level. As consumers continue to demand a wide range of high quality, full-flavored beers, small and independent craft brewers are meeting this growing demand with innovative offerings, creating high levels of economic value in the process.
 
 **Bart Watson**, Chief Economist for the Brewers Association
 
@@ -23,7 +23,7 @@ https://www.brewersassociation.org/statistics/economic-impact-data/
 
 We have been hired to gain incite into breweries in the United Stated. We will focus on providing information to a national brewery for them to look into investing in the craft brewery industry.
 
-### Data
+## Data
 
 The data for this study will consist of two databases collected and supplied by our client.
 
@@ -48,7 +48,7 @@ The data for this study will consist of two databases collected and supplied by 
 | City | city where brewery is located |
 | State | state where brewery is located |
 
-### Folder Information
+## Folder Information
 
 There are 3 folders in the BeersAndBreweries repository:
 
@@ -56,41 +56,62 @@ There are 3 folders in the BeersAndBreweries repository:
    2. Directives - This folder contains the original request for information. (Case Study 01.docx, CaseStudy1Rubric.docx)
    3. The CaseStudy01 folder simply contains the graphics used in this report.
 
-R libraries used in the report
-```{r libraries, message=FALSE, echo=TRUE}
+```{r librariesAndHelpers, message=FALSE}
+#R libraries used in the report
 #load libraries
-library(dplyr)
+list.of.packages <- c("plyr", "dplyr", "ggplot2", "pastecs", "reshape2", "kableExtra")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos = "http://cran.us.r-project.org")
+
 library(plyr)
+library(dplyr)
 library(ggplot2)
 library(pastecs)
+library(reshape2)
+library(kableExtra)
+#function to trim white space
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 ```
 
-Read the two databases into R
-```{r read data, echo=TRUE}
-#read in the two databases
+
+```{r readData}
+#read in the two datasets
 breweries <- read.csv("Data/Breweries.csv")
+#States has a leading space, removing it
+breweries$State <- trim(breweries$State)
 beers <- read.csv("Data/Beers.csv")
 ```
 
-### Questions our client would like addressed
+## Questions our client would like addressed
 
-   1. How many breweries are present in each state?
+### 1. How many breweries are present in each state?
    
-**The table below list breweries in each state. Washington DC, North Dakota, South Dakota and West Virginia are at the bottom with only one brewery. Colorado leads the list with 47.**
+The table below lists breweries in each state. Washington DC, North Dakota, South Dakota and West Virginia are at the bottom with only one brewery. Colorado leads the list with 47.
 
-```{r breweries state, echo=TRUE}
-#count breweries in each state and order from lowest to higest
-brew_state <- sort(table(breweries$State))
-#List out the table 
-brew_state
+```{r breweriesByState}
+#Group breweries by state and provide a count
+stateGroupedBreweryData <- breweries %>%
+  group_by(State) %>%
+  count()
+#Changing column name of count
+names(stateGroupedBreweryData)[2] <- "BreweriesCount"
+#Creating a bar chart and ordering by states descending
+stateBreweryCountBarChart <- ggplot(data=stateGroupedBreweryData,
+                                    aes(x=reorder(State,-BreweriesCount), y=BreweriesCount, fill = State)) +
+  geom_bar(stat="identity") +
+  labs(y = "Craft Breweries", x = "State") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Number of Craft Breweries by State") +
+  guides(fill=FALSE) # Removing legend
+
+#Display it
+stateBreweryCountBarChart
 ```
 
-   2. We will now merge the beer data with the breweries data and print the first 6 observations and the last six observations to check the new merged file.
+### 2. We have two datasets, one with beers and the other with breweries. Below are the first and last 6 observations to give an example of the kind of data used for the analysis.
 
-```{r merge data, echo=TRUE}
-#looking at each database to see problems before the merge
-head(beers)
-head(breweries)
+```{r mergeData, message=FALSE}
 #rename Brew_ID to Brewery_id to merge data
 colnames(breweries)[1] <- "Brewery_id"
 #both have a "Name" two for different groups
@@ -100,104 +121,135 @@ colnames(breweries)[2] <- "Brewery_Name"
 colnames(beers)[1] <- "Beer_Name"
 #merge both data sets
 brew_beer <- merge.data.frame(beers, breweries, by = "Brewery_id")
-#print the first 6 observations
-head(brew_beer, 6)
-#print the last 6 observations
-tail(brew_beer, 6)
+
+#print the first and last 6 observations, removing some columns for the clients
+brewBeerForTable <- brew_beer %>% 
+  select(Beer_Name, Style, ABV, IBU, Brewery_Name, City, State) 
+
+knitr::kable(head(brewBeerForTable, 6), row.names = FALSE) %>%
+  kable_styling(full_width = F)
+knitr::kable(tail(brewBeerForTable,6), row.names = FALSE) %>%
+  kable_styling(full_width = F)
 ```
 
-   3. Report the number of NA's in each column.
+### 3. Report the number of NA's in each column.
    
-**There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA's out of the total 2410 observations. The IBU data may need to be revisited. With close to half the data not reported predictive information based on this information may be skewed. We will address this if this shows to be a problem.**
+There are only two columns that have missing data. The ABV looks to be missing 62 entries and IBU has 1005 NA's out of the total 2410 observations. The IBU data may need to be revisited. With close to half the data not reported predictive information based on this information may be skewed. We will address this if this shows to be a problem.
    
-```{r count NAs, echo=TRUE}
-#use colSum to sum up the NA's in each column
-colSums(is.na(brew_beer))
+```{r countNAs}
+#use colSum to sum up the NA's in each column, making it a data.frame to spruce it up easier in kable
+columnNASums <- as.data.frame(colSums(is.na(brew_beer)))
 
-```
+#change name of number column
+names(columnNASums) <- c("# of NAs")
 
-   4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
-   
-```{r Compute the median, echo=TRUE}
-#Compute the median alcohol content (ABV) by state
-medABV <- tapply(brew_beer$ABV, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
-#Compute the median international bitterness unit (IBU) by state
-medIBU <- tapply(brew_beer$IBU, brew_beer$State, function(x) median = median(x, na.rm = TRUE))
-
-#plot a bar chart to compare ABV and IBU
-#convert AVB and IBU to a data frame
-medABVbar <- data.frame(medABV)
-medIBUbar <- data.frame(medIBU)
-
-#add a State column to ABV and IBU
-medABVbar$State <- rownames(medABVbar)
-medIBUbar$State <- rownames(medIBUbar)
-
-#plot a bar chart for ABV
-ggplot(na.omit(medABVbar), aes(x=reorder(medABVbar$State, medABVbar$medABV), y=medABVbar$medABV)) +
-  geom_bar(stat="identity", color="white", fill="blue") +
-  ylab("Alcohol Content") + xlab("State") +
-  ggtitle("Median ABV by State") +
-  coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
-
-#Remove SD from the list due to no IBU data
-medIBUbar <- medIBUbar[-grep("SD", medIBUbar$State),]
-#plot a bar chart for IBU
-ggplot((medIBUbar), aes(x=reorder(medIBUbar$State, medIBUbar$medIBU), y=medIBUbar$medIBU)) +
-  geom_bar(stat="identity", color="white", fill="blue") +
-  ylab("IBU") + xlab("State") +
-  ggtitle("Median IBU by State") +
-  coord_flip() + theme(plot.title = element_text(hjust=0.5), text = element_text(size=7.5))
+#printing nicely
+knitr::kable(columnNASums) %>%
+  kable_styling(full_width = F)
 
 ```
 
-   5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+### 4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
+   
+```{r medianAbvAndIbuPerState}
+#Group and summarize data, get the median of abv and ibu and ignore NA
+beerSummaryByState <- brew_beer %>%
+  group_by(State) %>%
+  summarise(MedianABV = median(ABV, na.rm = TRUE), MedianIBU = median(IBU, na.rm = TRUE)) %>%
+  as.data.frame()
 
-**In the dataset provided to us, Colorado has the higest alcoholic (ABV) beer and Oregon has the most bitter (IBU).**
+#Median ABV plot, There are no NA ABVs but just in case they do in the future
+medianAbvByStateBarChart <- ggplot(data=beerSummaryByState[!is.na(beerSummaryByState$MedianABV),],
+                                   aes(x=reorder(State, -MedianABV), y=MedianABV, fill = State)) +
+  geom_bar(stat="identity") +
+  labs(y = "Median ABV", x = "State") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Median ABV of Craft Beers by State") +
+  guides(fill=FALSE) # Removing legend
+medianAbvByStateBarChart
+
+#Median IBU Bar Plot. Filtering out NA removes SD
+medianIbuByStateBarChart <- ggplot(data=beerSummaryByState[!is.na(beerSummaryByState$MedianIBU),] , 
+                                   aes(x=reorder(State, -MedianIBU), y=MedianIBU, fill = State)) +
+  geom_bar(stat="identity") +
+  labs(y = "Median IBU", x = "State") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Median IBU of Craft Beers by State") +
+  guides(fill=FALSE) # Removing legend
+medianIbuByStateBarChart
+```
+
+### 5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+
+Colorado produces the beer with the highest percent of alcohol (ABV). 
       
-```{r max ABV and IBU, echo= TRUE}
-#state wuth the maximum alcoholic (ABV) beer
-brew_beer$State[which.max(brew_beer$ABV)]
-#state with the most bitter (IBU) beer
-brew_beer$State[which.max(brew_beer$IBU)]
+```{r statesWithMaxAbv}
+#get states ordered by ABV
+statesByAbv <- brew_beer %>% 
+  group_by(State) %>%
+  filter(ABV == max(ABV, na.rm = TRUE)) %>%
+  select(State, ABV, Beer_Name) %>%
+  arrange(-ABV)
+
+names(statesByAbv) <- c("State", "ABV", "Beer Name")
+
+#Display top 3
+knitr::kable(head(statesByAbv, 3), row.names = FALSE) %>%
+  kable_styling(full_width = F, position = "left")
 ```
 
-   6. Summary statistics for the ABV variable.
+Oregon has the most bitter beer (IBU).
+```{r statesWithMaxIbu}
+#get states ordered by IBU
+statesByIbu <- brew_beer %>% 
+  group_by(State) %>%
+  filter(IBU == max(IBU, na.rm = TRUE)) %>%
+  select(State, IBU, Beer_Name) %>%
+  arrange(-IBU)
 
-| Value | Description |
-|-------|-------------|
-| 2348 | the number of values (nbr.val) |
-| 0 | number of null values (nbr.null) |
-| 62 | number of missing values (nbr.na) |
-| 0.001 | minimal value (min) |
-| 0.128 | maximal value (max) |
-| 0.127 | range (range, that is, max-min) |
-| 140.348 | sum of all non-missing values (sum) |
-| 0.056 | median (median) |
-| 0.060 | mean (mean) |
-| 0.00028 | standard error on the mean (SE.mean) |
-| 0.00055 | confidence interval of the mean (CI.mean) at the p=0.95 level |
-| 0.00018 | variance (var) |
-| 0.01354 | standard deviation (std.dev) |
-| 0.22655 | variation coefficient (coef.var) (sd/mean) |
+names(statesByIbu) <- c("State", "IBU", "Beer Name")
 
-```{r summary ABV, echo= TRUE}
+#Display top 3
+knitr::kable(head(statesByIbu, 3), row.names = FALSE) %>%
+  kable_styling(full_width = F, position = "left")
+```
+
+### 6. Summary statistics for the ABV variable.
+
+| Description                     | Value   |
+| ------------------------------- | ------- |
+| Total Values                    | 2348    |
+| Null Values                     | 0       |
+| Missing Values                  | 62      |
+| Minimum Value                   | 0.001   |
+| Maximum Value                   | 0.128   |
+| Range (Max - Min)               | 0.127   |
+| Sum of all Values               | 140.348 |
+| Median                          | 0.056   |
+| Mean                            | 0.060   |
+| Standard Error                  | 0.00028 |
+| 95% Confidence Interval of Mean | 0.00055 |
+| Variance                        | 0.00018 |
+| Standard Deviation              | 0.01354 |
+| Variation Coefficient           | 0.22655 |
+
+```{r summaryABV}
 #summary stats for ABV
 options(scipen=100)
 options(digits=2)
-stat.desc(brew_beer$ABV)
+#stat.desc(brew_beer$ABV)
 ```
 
-   7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
-   
-```{r scatter plot, echo=TRUE}
+### 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+The scatter plot above looks to show a positive correlation between the ABV and IBU.
+```{r scatterPlot}
 #ggplot to check for correlation between IBU and ABV
 ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(method=lm,se=FALSE, na.rm=TRUE)
 ```
 
-**The scatter plot above looks to show a positive correlation between the ABV and IBU.**
-
-**Looking at the numbers below we can see a very significant correlation between the alcohol content (ABV) and the bitterness (IBU) of a beer. One thing to keep in mind, there are 62 missing entries in AVB and 1005 in the IBU data leading to a lower degrees of freedom, but at a thousand in the current data set the correlation data is still relevant. This is observational data so even with the correlation any inferences made to the larger population would be speculative.**
+Looking at the numbers below we can see a very significant correlation between the alcohol content (ABV) and the bitterness (IBU) of a beer. One thing to keep in mind, there are 62 missing entries in AVB and 1005 in the IBU data leading to a lower degrees of freedom, but at a thousand in the current data set the correlation data is still relevant. This is observational data so even with the correlation, any inferences about causal relationship between alcohol content and bitterness is speculative.
 
 ```{r Pearson, echo+TRUE}
 # Pearson to check for correlation 
@@ -206,8 +258,7 @@ cor.test(brew_beer$ABV, brew_beer$IBU, method = "pearson")
 
 ### Conclusion
 
-Summarize your findings from this exercise.
-
+You should stay out of Colorado, California, Michigan, Oregon, and Texas. Also you should try and get more IBU values from the breweries not providing it. [WE SHOULD FACT CHECK IF BEERS ARE MISSING IBU VALUES BY BREWERY]
 **sessionInfo**
 
 R version 3.5.1 (2018-07-02)

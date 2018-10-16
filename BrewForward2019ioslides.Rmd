@@ -1,0 +1,96 @@
+---
+title: "Brew Forward 2019"
+author: "Chad Madding & Ryan Paul"
+date: "10/16/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r librariesAndHelpers, message=FALSE}
+#R libraries used in the report
+#load libraries
+list.of.packages <- c("plyr", "dplyr", "ggplot2", "pastecs", "reshape2", "kableExtra")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos = "http://cran.us.r-project.org")
+
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(pastecs)
+library(reshape2)
+library(kableExtra)
+#function to trim white space
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+```
+
+```{r readData}
+#read in the two datasets
+breweries <- read.csv("Data/Breweries.csv")
+#States has a leading space, removing it
+breweries$State <- trim(breweries$State)
+beers <- read.csv("Data/Beers.csv")
+#rename Brew_ID to Brewery_id to merge data
+colnames(breweries)[1] <- "Brewery_id"
+#both have a "Name" two for different groups
+#rename Name to Brewery_Name
+colnames(breweries)[2] <- "Brewery_Name"
+#rename Name to Beer_Name
+colnames(beers)[1] <- "Beer_Name"
+#merge both data sets
+brew_beer <- merge.data.frame(beers, breweries, by = "Brewery_id")
+```
+
+## The Campaign
+With the beer and brewery data you have provided us, we have come up with the following observations:
+
+- Craft breweries by state
+- State specific beer property metrics
+- Analysis of a potential relationship between IBU and ABV in beer
+
+## State of Craft Breweries by State
+
+```{r breweriesByState}
+#Group breweries by state and provide a count
+stateGroupedBreweryData <- breweries %>%
+  group_by(State) %>%
+  count()
+#Changing column name of count
+names(stateGroupedBreweryData)[2] <- "BreweriesCount"
+#Creating a bar chart and ordering by states descending
+stateBreweryCountBarChart <- ggplot(data=stateGroupedBreweryData,
+                                    aes(x=reorder(State,-BreweriesCount), y=BreweriesCount, fill = State)) +
+  geom_bar(stat="identity") +
+  labs(y = "Craft Breweries", x = "State") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Number of Craft Breweries by State") +
+  guides(fill=FALSE) # Removing legend
+
+#Display it
+stateBreweryCountBarChart
+```
+
+## Notes on Missing Data
+Some context regarding the upcoming analysis. We are missing the following values for the number of beers in the right column.
+
+```{r countNAs}
+#use colSum to sum up the NA's in each column, making it a data.frame to spruce it up easier in kable
+columnNASums <- data.frame(colSums(is.na(brew_beer)))
+
+#change name of number column
+names(columnNASums) <- c("# Beers")
+
+#printing nicely
+knitr::kable(columnNASums[which(columnNASums[,1]>0),, drop = FALSE]) %>%
+  kable_styling(full_width = F)
+```
+
+The IBU measurements are missing account for nearly half of the beers in the data set.
+
+*RESULTS WILL BE SKEWED*
+
+
+

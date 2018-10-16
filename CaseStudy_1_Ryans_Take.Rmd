@@ -69,24 +69,23 @@ beerSummaryByState <- beerAndBreweryData %>%
   group_by(State) %>%
   summarise(MedianABV = median(ABV, na.rm = TRUE), MedianIBU = median(IBU, na.rm = TRUE)) %>%
   as.data.frame()
-#melting medians together for grouped barchart
-beerSummaryByStateMelt <- melt(beerSummaryByState[,c("State", "MedianABV", "MedianIBU")], value.name = "MedianValue")
-#Actually never mind, that doesn't make any sense, abv is supa small
+
 #Median ABV plot, There are no NA ABVs but just in case they do in the future
 medianAbvByStateBarChart <- ggplot(data=beerSummaryByState[!is.na(beerSummaryByState$MedianABV),],
                                    aes(x=reorder(State, -MedianABV), y=MedianABV, fill = State)) +
   geom_bar(stat="identity") +
-  labs(y = "Median ABV (UNITS???)", x = "State") +
+  labs(y = "Median ABV", x = "State") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         plot.title = element_text(hjust = 0.5)) +
   ggtitle("Median ABV of Craft Beers by State") +
   guides(fill=FALSE) # Removing legend
 medianAbvByStateBarChart
-#Median IBU Bar Plot. Removing SD because it has NA for IBU
+
+#Median IBU Bar Plot. Filtering out NA removes SD
 medianIbuByStateBarChart <- ggplot(data=beerSummaryByState[!is.na(beerSummaryByState$MedianIBU),] , 
                                    aes(x=reorder(State, -MedianIBU), y=MedianIBU, fill = State)) +
   geom_bar(stat="identity") +
-  labs(y = "Median IBU (UNITS???)", x = "State") +
+  labs(y = "Median IBU", x = "State") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         plot.title = element_text(hjust = 0.5)) +
   ggtitle("Median IBU of Craft Beers by State") +
