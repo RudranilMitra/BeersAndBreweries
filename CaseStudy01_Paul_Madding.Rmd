@@ -243,7 +243,7 @@ options(digits=2)
 ```
 
 ### 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
-The scatter plot above looks to show a positive correlation between the ABV and IBU.
+The scatter plot below looks to show a positive correlation between the ABV and IBU.
 ```{r scatterPlot}
 #ggplot to check for correlation between IBU and ABV
 ggplot(brew_beer, aes(x = IBU, y = ABV)) + geom_point(na.rm=TRUE)+geom_smooth(method=lm,se=FALSE, na.rm=TRUE)

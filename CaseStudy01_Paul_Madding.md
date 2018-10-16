@@ -349,7 +349,7 @@ Oregon has the most bitter beer (IBU).
 
 
 ### 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
-The scatter plot above looks to show a positive correlation between the ABV and IBU.
+The scatter plot below looks to show a positive correlation between the ABV and IBU.
 ![](CaseStudy01_Paul_Madding_files/figure-html/scatterPlot-1.png)<!-- -->
 
 Looking at the numbers below we can see a very significant correlation between the alcohol content (ABV) and the bitterness (IBU) of a beer. One thing to keep in mind, there are 62 missing entries in AVB and 1005 in the IBU data leading to a lower degrees of freedom, but at a thousand in the current data set the correlation data is still relevant. This is observational data so even with the correlation, any inferences about causal relationship between alcohol content and bitterness is speculative.
@@ -371,8 +371,7 @@ Looking at the numbers below we can see a very significant correlation between t
 
 ### Conclusion
 
-Summarize your findings from this exercise.
-
+You should stay out of Colorado, California, Michigan, Oregon, and Texas. Also you should try and get more IBU values from the breweries not providing it. [WE SHOULD FACT CHECK IF BEERS ARE MISSING IBU VALUES BY BREWERY]
 **sessionInfo**
 
 R version 3.5.1 (2018-07-02)
