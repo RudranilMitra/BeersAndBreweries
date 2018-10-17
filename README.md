@@ -60,7 +60,11 @@ This will be information about folders
    
 ## Conclusion
 
-Summarize your findings from this exercise.
+We recommend looking at states other than Colorado, California, Michigan, Oregon, and Texas to start in. Look at states that are not saturated with breweries but with an established beer presence.
+
+IPA’s and Pale Ales would be a great starting point in style. Both are the top selection in the US.
+
+You may need to get more IBU values from the beers you have in the data.
 
 ## sessionInfo
 R version 3.5.1 (2018-07-02)
