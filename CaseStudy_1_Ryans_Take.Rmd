@@ -142,3 +142,20 @@ abvVsIbuScatterPlot <- ggplot(data=beerAndBreweryData[complete.cases(beerAndBrew
   ggtitle("IBU vs ABV of Craft Beers") +
   guides(fill=FALSE) # Removing legend
 abvVsIbuScatterPlot
+```
+
+```{r topStyles}
+library(kableExtra)
+topStyles <- beerAndBreweryData %>%
+  group_by(Style) %>%
+  count()
+
+#Changing column name of count
+names(topStyles)[2] <- "Count"
+
+topStyles <- topStyles %>%
+  arrange(-Count)
+
+knitr::kable(topStyles,, drop = FALSE) %>%
+  kable_styling(full_width = F)
+```
