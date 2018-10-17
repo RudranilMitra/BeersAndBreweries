@@ -40,7 +40,12 @@ The data for this study will consist of two databases collected and supplied by 
 
 ## Folder Information
 
-This will be information about folders
+There are 4 folders in the BeersAndBreweries repository:
+
+   1. Data - This folder contains the two databases provided by our client. (Beers.csv, Breweries.csv)
+   2. Directives - This folder contains the original request for information. (Case Study 01.docx, CaseStudy1Rubric.docx)
+   4. Working - This folder contains the scripts and information used to create our report
+   3. The CaseStudy01 folder simply contains the graphics used in this report.
 
 ## Questions client would like addressed
 
