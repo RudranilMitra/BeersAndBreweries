@@ -13,6 +13,12 @@ output:
 
 ## Introduction
 
+Link to video:
+http://www.screencast.com/t/di7tFGSEG1p
+
+Link to GitHub
+https://github.com/cmadding/BeersAndBreweries
+
 With a strong presence across the 50 states and the District of Columbia, craft breweries are a vibrant and flourishing economic force at the local, state and national level. As consumers continue to demand a wide range of high quality, full-flavored beers, small and independent craft brewers are meeting this growing demand with innovative offerings, creating high levels of economic value in the process.
 
 **Bart Watson**, Chief Economist for the Brewers Association
